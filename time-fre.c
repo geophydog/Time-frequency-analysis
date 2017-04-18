@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
     FILE *ft, *fp;
 
     if( argc != 5 ) {
-        fprintf(stderr,"Usage: <time-fre> <sacfile> <segmentation_length> <high_frequency_limit> <output_result_file_name>\n");
+        fprintf(stderr,"Usage: time-fre <sacfile> <segmentation_length> <high_frequency_limit> <output_result_file_name>\n");
         fprintf(stderr,"       return power-spectral in time-frequency domains,which will be saved output_result_file_name\n");
         fprintf(stderr,"       [sacfile] the name of inputing SAC format file;\n");
         fprintf(stderr,"       [segmentation_length] the short FFT time length;\n");
