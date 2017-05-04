@@ -23,10 +23,10 @@ int main(int argc, char *argv[]) {
     if( argc != 5 ) {
         fprintf(stderr,"Usage: time-fre <sacfile> <segmentation_length> <high_frequency_limit> <output_result_file_name>\n");
         fprintf(stderr,"       return power-spectral in time-frequency domains,which will be saved output_result_file_name\n");
-        fprintf(stderr,"       [sacfile] the name of inputing SAC format file;\n");
-        fprintf(stderr,"       [segmentation_length] the short FFT time length;\n");
-        fprintf(stderr,"       [high_frerquency_limit] the maximum of frequency of outputing power spectral;\n");
-        fprintf(stderr,"       [output_result_file_name] the name of outputing results;\n");
+        fprintf(stderr,"       <sacfile>                 The name of inputing SAC format file;\n");
+        fprintf(stderr,"       <segmentation_length>     The short FFT time length;\n");
+        fprintf(stderr,"       <high_frerquency_limit>   The maximum of frequency of outputing power spectral;\n");
+        fprintf(stderr,"       <output_result_file_name> The name of outputing results;\n");
         fprintf(stderr,"         Power spectral plot by will be saved in file \"plot.sh\",just run with command \"sh plot.sh\".\n");
         fprintf(stderr,"         Attention!!! Executing \"sh plot.sh\" requires GMT(the Generic Mapping Tools).\n");
         exit(1);
