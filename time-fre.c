@@ -14,7 +14,7 @@ int near_pow2(int n) {
 
 int main(int argc, char *argv[]) {
     int i, k, npts, seg_npts, seg_num;
-    float seg_len, *data, time = 0., fre, amp, high_f, peak = 0.;
+    float seg_len, *data, b, e, time = 0., fre, amp, high_f, peak = 0.;
     SACHEAD hd;
     fftw_complex *in, *out;
     fftw_plan p;
@@ -38,7 +38,8 @@ int main(int argc, char *argv[]) {
     fp = fopen("plot.sh","w");
 
     data = read_sac(argv[1],&hd);
-    seg_num = (int)(hd.e/seg_len);
+    b = hd.b; e = hd.e;
+    seg_num = (int)((e-b)/seg_len);
     seg_npts = (int)(seg_len/hd.delta);
     npts = near_pow2(seg_npts);
 
@@ -46,7 +47,7 @@ int main(int argc, char *argv[]) {
     out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * npts);
 
     while ( k < seg_num ) {
-        time = k*seg_len+seg_len/2.;
+        time = b + k*seg_len+seg_len/2.;
 
         for ( i = 0; i < npts; i ++ ) {
             if( i < seg_npts ) in[i][0] = data[i+k*seg_npts];
@@ -75,11 +76,11 @@ int main(int argc, char *argv[]) {
     fprintf(fp,"rm %s\n", argv[4]);
     fprintf(fp,"mv tmp.file %s\n", argv[4]);
     fprintf(fp,"makecpt -Cjet.cpt -T0/1.0/0.1 -Z >tmp1.cpt\n");
-    fprintf(fp,"psxy -R0/%.1f/0/%f -JX8i/5i -K -T >plot.ps\n", hd.e, high_f);
+    fprintf(fp,"psxy -R%f/%.1f/0/%f -JX8i/5i -K -T >plot.ps\n", b, e, high_f);
     fprintf(fp,"surface %s -R -I%d/%f -G%s.grd\n" ,argv[4], (int)(seg_len/2), high_f/100., argv[4]);
     fprintf(fp,"grd2cpt %s.grd -Cjet>tmp.cpt\n",argv[4]);
-    fprintf(fp,"grdimage %s.grd -R -J -K -O -Ctmp.cpt -B%d:\"Time(sec)\":/%f:\"Frequency(Hz)\":WSen>>plot.ps\n", argv[4], (int)(hd.e/10.), high_f/10.);
-    fprintf(fp,"echo %s 0 1 | pssac2 -R0/%d/0/2 -JX8i/1i -K -O -B%d/1:\"amp\":WSen -C0/%d -M0.8 -W0.8p -Xa0i -Ya5.4i>>plot.ps\n", argv[1], (int)hd.e, (int)(hd.e/10.), (int)hd.e);
+    fprintf(fp,"grdimage %s.grd -R -J -K -O -Ctmp.cpt -B%d:\"Time(sec)\":/%f:\"Frequency(Hz)\":WSen>>plot.ps\n", argv[4], (int)((e-b)/10.), high_f/10.);
+    fprintf(fp,"echo %s 0 1 | pssac2 -R%f/%f/0/2 -JX8i/1i -K -O -B%d/1:\"amp\":WSen -C%f/%f -M0.8 -W0.8p -Xa0i -Ya5.4i>>plot.ps\n", argv[1], b, e, (int)((e-b)/10.), b, e);
     fprintf(fp,"psscale -Ctmp1.cpt -D8.5i/2.5i/12.55/0.8 -Ba0.1g0:\"Normalized amplitude power\": -K -O >>plot.ps\n");
     fprintf(fp,"echo %.1f 1 20 0 Times-Bold 0 %s | pstext -R -J -K -O -Xa-1i -Ya6.2i>>plot.ps\n", hd.e/2, argv[1]);
     fprintf(fp,"psxy -R -J -O -T >>plot.ps\n");
