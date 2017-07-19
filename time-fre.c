@@ -86,6 +86,7 @@ int main(int argc, char *argv[]) {
     fprintf(fp,"psxy -R -J -O -T >>plot.ps\n");
     fprintf(fp,"ps2pdf plot.ps plot.pdf\n");
     fprintf(fp,"rm tmp*.cpt\n");
+    fprintf(fp,"evince plot.pdf\n");
     fclose(fp);
 
     free(data);
