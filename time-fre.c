@@ -80,7 +80,7 @@ int main(int argc, char *argv[]) {
     fprintf(fp,"surface %s -R -I%d/%f -G%s.grd\n" ,argv[4], (int)(seg_len/2), high_f/100., argv[4]);
     fprintf(fp,"grd2cpt %s.grd -Cjet>tmp.cpt\n",argv[4]);
     fprintf(fp,"grdimage %s.grd -R -J -K -O -Ctmp.cpt -B%d:\"Time(sec)\":/%f:\"Frequency(Hz)\":WSen>>plot.ps\n", argv[4], (int)((e-b)/10.), high_f/10.);
-    fprintf(fp,"echo %s 0 1 | pssac2 -R%f/%f/0/2 -JX8i/1i -K -O -B%d/1:\"amp\":WSen -C%f/%f -M0.8 -W0.8p -Xa0i -Ya5.4i>>plot.ps\n", argv[1], b, e, (int)((e-b)/10.), b, e);
+    fprintf(fp,"echo %s 0 1 | pssac2 -R%f/%f/0/2 -JX8i/1i -K -O -B%d/0:\"Amplitude\":WSen -C%f/%f -M0.8 -W0.8p -Xa0i -Ya5.4i>>plot.ps\n", argv[1], b, e,(int)((e-b)/10), b, e);
     fprintf(fp,"psscale -Ctmp1.cpt -D8.5i/2.5i/12.55/0.8 -Ba0.1g0:\"Normalized amplitude power\": -K -O >>plot.ps\n");
     fprintf(fp,"echo %.1f 1 20 0 Times-Bold 0 %s | pstext -R -J -K -O -Xa-1i -Ya6.2i>>plot.ps\n", (b+e)/2., argv[1]);
     fprintf(fp,"psxy -R -J -O -T >>plot.ps\n");
