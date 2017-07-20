@@ -88,6 +88,7 @@ int main(int argc, char *argv[]) {
     fprintf(fp,"psscale -Ctmp1.cpt -D8.5i/2.5i/12.55/0.8 -Ba0.1g0:\"Normalized amplitude power\": -K -O >>plot.ps\n");
     fprintf(fp,"echo %.1f 1 20 0 Times-Bold 0 %s | pstext -R -J -K -O -Xa-1i -Ya6.2i>>plot.ps\n", (t1+t2)/2., argv[1]);
     fprintf(fp,"psxy -R -J -O -T >>plot.ps\n");
+    fprintf(fp,"gmt psconvert -Tg -A -P plot.ps\n");
     fprintf(fp,"ps2pdf plot.ps plot.pdf\n");
     fprintf(fp,"rm tmp*.cpt\n");
     fprintf(fp,"evince plot.pdf\n");
