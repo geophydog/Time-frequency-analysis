@@ -21,14 +21,14 @@ int main(int argc, char *argv[]) {
     FILE *ft, *fp;
 
     if( argc != 8 ) {
-        fprintf(stderr,"Usage: time-fre <sacfile> <t1> <t2> <segmentation_length> <high_frequency_limit> <output_result_file_name>\n");
+        fprintf(stderr,"Usage: time-fre <sacfile> <t1> <t2> <segmentation_length> <low_frequency> <high_frequency> <output_result_file_name>\n");
         fprintf(stderr,"       return power-spectral in time-frequency domains,which will be saved output_result_file_name\n");
         fprintf(stderr,"       <sacfile>                 The name of inputing SAC format file;\n");
         fprintf(stderr,"       <t1>                      The beginning time of time-fre analysis;\n");
         fprintf(stderr,"       <t2>                      The ending time of time-fre analysis;\n");
         fprintf(stderr,"       <segmentation_length>     The short FFT time length;\n");
-        fprintf(stderr,"       <low_f>                   The low corner frequency;\n");
-        fprintf(stderr,"       <high_frerquency_limit>   The high corner frequency;\n");
+        fprintf(stderr,"       <low_frequency>           The low corner frequency;\n");
+        fprintf(stderr,"       <high_frerquency>         The high corner frequency;\n");
         fprintf(stderr,"       <output_result_file_name> The name of outputing results;\n");
         fprintf(stderr,"         Power spectral plot by will be saved in file \"plot.sh\",just run with command \"sh plot.sh\".\n");
         fprintf(stderr,"         Attention!!! Executing \"sh plot.sh\" requires GMT(the Generic Mapping Tools).\n");
@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
     data = read_sac(argv[1],&hd);
     seg_num = (int)((t2-t1)/seg_len);
     seg_npts = (int)(seg_len/hd.delta);
-    begin_index = (int)(t1/hd.delta);
+    begin_index = (int)((t1-hd.b)/hd.delta);
     npts = near_pow2(seg_npts);
 
     in = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * npts);
@@ -93,7 +93,6 @@ int main(int argc, char *argv[]) {
     fprintf(fp,"gmt psconvert -Tg -A -P %s.ps\n", argv[1]);
     fprintf(fp,"ps2pdf %s.ps %s.pdf\n", argv[1], argv[1]);
     fprintf(fp,"rm tmp*.cpt\n");
-    fprintf(fp,"evince %s.pdf\n", argv[1]);
     fclose(fp);
 
     free(data);
