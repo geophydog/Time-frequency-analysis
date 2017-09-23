@@ -30,8 +30,8 @@ int main(int argc, char *argv[]) {
         fprintf(stderr,"       <low_frequency>           The low corner frequency;\n");
         fprintf(stderr,"       <high_frerquency>         The high corner frequency;\n");
         fprintf(stderr,"       <output_result_file_name> The name of outputing results;\n");
-        fprintf(stderr,"         Power spectral plot by will be saved in file \"plot.sh\",just run with command \"sh plot.sh\".\n");
-        fprintf(stderr,"         Attention!!! Executing \"sh plot.sh\" requires GMT(the Generic Mapping Tools).\n");
+        fprintf(stderr,"       <<<Power spectral plot by will be saved in file \"plot.sh\",just run with command \"sh plot.sh\".\n");
+        fprintf(stderr,"       <<<Attention!!! Executing \"sh plot.sh\" requires GMT(the Generic Mapping Tools).\n");
         exit(1);
     }
 
