@@ -1,4 +1,5 @@
 # Time-frequency-analysis
+- Executing time-frequency analysis with short time FFT method.
 
 ## Installation
 - Execute 'make' to compile executable command 'time-fre'.
