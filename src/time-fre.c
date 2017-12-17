@@ -4,6 +4,8 @@
 #include <fftw3.h>
 #include "sacio.h"
 
+
+// To get an integer m greater or equal to integer n. m >= n; m = 2^k, k is an integer and k > 0.
 int near_pow2(int n) {
     int m;
     float f;
@@ -12,6 +14,7 @@ int near_pow2(int n) {
     return m;
 }
 
+// Here is the main program.
 int main(int argc, char *argv[]) {
     int i, k, npts, seg_npts, seg_num, begin_index;
     float seg_len, *data, t1, t2, time = 0., fre, amp, low_f, high_f, peak = 0.;
@@ -20,6 +23,7 @@ int main(int argc, char *argv[]) {
     fftw_plan p;
     FILE *ft, *fp;
 
+// Check parameters and print the usage if parameters are not enough.
     if( argc != 8 ) {
         fprintf(stderr,"Usage: time-fre <sacfile> <t1> <t2> <segmentation_length> <low_frequency> <high_frequency> <output_result_file_name>\n");
         fprintf(stderr,"       return power-spectral in time-frequency domains,which will be saved output_result_file_name\n");
@@ -35,6 +39,7 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
+// Get parameters inputted.
     t1 = atof(argv[2]);
     t2 = atof(argv[3]);
     seg_len= atof(argv[4]);
@@ -43,12 +48,14 @@ int main(int argc, char *argv[]) {
     ft = fopen(argv[7],"w");
     fp = fopen("plot.sh","w");
 
+ // Reading into SAC format file.
     data = read_sac(argv[1],&hd);
     seg_num = (int)((t2-t1)/seg_len);
     seg_npts = (int)(seg_len/hd.delta);
     begin_index = (int)((t1-hd.b)/hd.delta);
     npts = near_pow2(seg_npts);
 
+// Declare two complex types: "in" and "out".
     in = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * npts);
     out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * npts);
 
@@ -76,6 +83,7 @@ int main(int argc, char *argv[]) {
     }
     fftw_free(in); fftw_free(out);
 
+// Write plot script based on GMT (the Generic Mapping Tools) syntax.
     fprintf(fp,"gmtset LABEL_FONT Times-Bold\n");
     fprintf(fp,"gmtset LABEL_FONT_SIZE 15p\n");
     fprintf(fp,"awk '{print $1,$2,$3/%f}' %s >tmp.file\n", peak, argv[7]);
@@ -99,4 +107,3 @@ int main(int argc, char *argv[]) {
     fclose(ft);
     return 0;
 }
-
