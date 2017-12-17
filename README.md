@@ -1,6 +1,6 @@
 # Time-frequency-analysis
 - Executing time-frequency analysis with short time FFT method.
-- [results](https://github.com/geophydog/Time-frequency-analysis/blob/master/images/t-f-analysis.png)
+- ![results](https://github.com/geophydog/Time-frequency-analysis/blob/master/images/t-f-analysis.png)
 
 ## Installation
 - Execute 'make' to compile executable command 'time-fre'.
