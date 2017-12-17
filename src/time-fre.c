@@ -85,7 +85,7 @@ int main(int argc, char *argv[]) {
 
 // Write plot script based on GMT (the Generic Mapping Tools) syntax.
     fprintf(fp,"gmtset LABEL_FONT Times-Bold\n");
-    fprintf(fp,"gmtset LABEL_FONT_SIZE 15p\n");
+    fprintf(fp,"gmtset LABEL_FONT_SIZE 15p\ngmtset ANNOT_FONT_PRIMARY 5\ngmtset ANNOT_FONT_SIZE_PRIMARY 12p\n");
     fprintf(fp,"awk '{print $1,$2,$3/%f}' %s >tmp.file\n", peak, argv[7]);
     fprintf(fp,"rm %s\n", argv[7]);
     fprintf(fp,"mv tmp.file %s\n", argv[7]);
