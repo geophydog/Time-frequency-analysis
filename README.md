@@ -16,5 +16,5 @@
 - time-fre SACfile t1 t2 segment_length fre_low fre_high outfile
 
 ## Contribution
-- Author: XupingFeng
+- Author: Xuping Feng
 - Email: geophydogvon@gmail.com
