@@ -18,7 +18,18 @@
 - [Download GMT](http://gmt.soest.hawaii.edu/projects/gmt/wiki/Download)
 
 ## Usage
-- time-fre SACfile t1 t2 segment_length fre_low fre_high outfile
+- time-fre SACfile t1 t2 segment_length fre_low fre_high output_file
+
+| parameter | mean | 
+| --------- | ---- |
+| SACfile   | name of SAC format file |
+|    t1     | begin time of doing time-frequency analysis |
+|    t2     | end time of doing time-frequency analysis   |
+|  segment_length |  segment length of doing time-frequency |
+|  fre_low   |  low limitation of corner frequency of doing time-frequency analysis |
+|  fre_high  | high limitation of corner frequency of doing time-frequency analysis |
+|  output_file | file name of outputting results |
+
 
 ## Contribution
 - Author: Xuping Feng
