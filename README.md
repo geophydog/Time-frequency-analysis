@@ -15,6 +15,7 @@
 - Linux or Mac OS platform.
 - SAC (Seismic Analysis Code, here, version 101.6a).
 - GMT (the Generic Mapping Tools, here, version 5.3.1).
+- [Download GMT](http://gmt.soest.hawaii.edu/projects/gmt/wiki/Download)
 
 ## Usage
 - time-fre SACfile t1 t2 segment_length fre_low fre_high outfile
