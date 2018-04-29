@@ -84,23 +84,25 @@ int main(int argc, char *argv[]) {
     fftw_free(in); fftw_free(out);
 
 // Write plot script based on GMT (the Generic Mapping Tools) syntax.
-    fprintf(fp,"gmtset LABEL_FONT Times-Bold\n");
-    fprintf(fp,"gmtset LABEL_FONT_SIZE 15p\ngmtset ANNOT_FONT_PRIMARY 5\ngmtset ANNOT_FONT_SIZE_PRIMARY 12p\n");
+   fprintf(fp,"gmtset LABEL_FONT Times-Bold\n");
+    fprintf(fp,"gmtset LABEL_FONT_SIZE 20\n");
+    fprintf(fp,"gmtset ANNOT_FONT_PRIMARY 5\ngmtset ANNOT_FONT_SIZE_PRIMARY 15\n");
     fprintf(fp,"awk '{print $1,$2,$3/%f}' %s >tmp.file\n", peak, argv[7]);
-    fprintf(fp,"rm %s\n", argv[7]);
-    fprintf(fp,"mv tmp.file %s\n", argv[7]);
     fprintf(fp,"makecpt -Cjet.cpt -T0/1.0/0.1 -Z >tmp1.cpt\n");
     fprintf(fp,"psxy -R%f/%.1f/%f/%f -JX8i/5i -K -T >%s.ps\n", t1, t2, low_f, high_f, argv[1]);
-    fprintf(fp,"surface %s -R -I%f/%f -G%s.grd\n" ,argv[7], seg_len/2, (high_f-low_f)/100., argv[7]);
-    fprintf(fp,"grd2cpt %s.grd -Cjet>tmp.cpt\n",argv[7]);
-    fprintf(fp,"grdimage %s.grd -R -J -K -O -Ctmp.cpt -B%d:\"Time(sec)\":/%f:\"Frequency(Hz)\":WSen>>%s.ps\n", argv[7], (int)((t2-t1)/10.), high_f/10., argv[1]);
-    fprintf(fp,"echo %s 0 1 | pssac2 -R%f/%f/0/2 -JX8i/1i -K -O -B%d/0:\"Amplitude\":WSen -C%f/%f -M0.8 -W0.8p -Xa0i -Ya5.4i>>%s.ps\n", argv[1], t1, t2,(int)((t2-t1)/10), t1, t2, argv[1]);
+    fprintf(fp,"surface tmp.file -R -I%f/%f -Gtmp.grd\n", seg_len/4, (high_f-low_f)/100.);
+    fprintf(fp,"grd2cpt tmp.grd -Cjet>tmp.cpt\n");
+    fprintf(fp,"grdimage tmp.grd -R -J -K -O -Ctmp.cpt -B%d:\"Time(sec)\":/%f:\"Frequency(Hz)\":WSen>>%s.ps\n", \
+            (int)((t2-t1)/10.), high_f/10., argv[1]);
+    fprintf(fp,"echo %s 0 1 | pssac2 -R%f/%f/0/2 -JX8i/1i -K -O -B%d/0:\"Amplitude\":WSen -C%f/%f -M0.8 -W0.8p -Xa0i -Ya5.4i>>%s.ps\n", \
+            argv[1], t1, t2,(int)((t2-t1)/10), t1, t2, argv[1]);
     fprintf(fp,"psscale -Ctmp1.cpt -D8.5i/2.5i/12.55/0.8 -Ba0.1g0:\"Normalized amplitude power\": -K -O >>%s.ps\n", argv[1]);
     fprintf(fp,"echo %.1f 1 20 0 Times-Bold 0 %s | pstext -R -J -K -O -Xa-1i -Ya6.2i>>%s.ps\n", (t1+t2)/2., argv[1], argv[1]);
     fprintf(fp,"psxy -R -J -O -T >>%s.ps\n", argv[1]);
     fprintf(fp,"gmt psconvert -Tg -A -P %s.ps\n", argv[1]);
     fprintf(fp,"ps2pdf %s.ps %s.pdf\n", argv[1], argv[1]);
-    fprintf(fp,"rm tmp*.cpt\n");
+    fprintf(fp,"rm tmp*\n");
+    fprintf(fp,"evince %s.pdf\n", argv[1]);
     fclose(fp);
 
     free(data);
