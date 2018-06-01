@@ -14,8 +14,10 @@
 
 ## Dependencies
 - Linux or Mac OS platform.
-- GMT (the Generic Mapping Tools, here, version 5.3.1).
+- GMT (the Generic Mapping Tools, here, version 4.5.15).
    - [Download GMT](http://gmt.soest.hawaii.edu/projects/gmt/wiki/Download)
+- pssac2 (module of plotting SAC format file)
+   - [How to install pssac2](https://blog.seisman.info/tags/pssac2/)
 
 ***
 
