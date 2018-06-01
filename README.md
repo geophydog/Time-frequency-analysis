@@ -3,7 +3,7 @@
 ***
 
 # Time-frequency-analysis
-- Executing time-frequency analysis with short time FFT method.
+- Executing time-frequency analysis with Short Time Fourier Transform(STFT) method.
 
 ***
 
