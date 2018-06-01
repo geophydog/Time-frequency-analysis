@@ -41,7 +41,7 @@ Go the directory "Example" and run with command below.
 time-fre ft_BBR.BHZ.SAC 0 30000 50 0.005 0.2 out.txt
 ```
 __result__
-![result](https://github.com/geophydog/Time-frequency-analysis/blob/master/Example/ft_BBR.BHZ.SAC.tif)
+![result](https://github.com/geophydog/Time-frequency-analysis/blob/master/Example/ft_BBR.BHZ.SAC.png)
 
 ## Contribution
 - Author: Xuping Feng
