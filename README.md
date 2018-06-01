@@ -40,6 +40,10 @@ Go the directory "Example" and run with command below.
 ```
 time-fre ft_BBR.BHZ.SAC 0 30000 50 0.005 0.2 out.txt
 ```
+
+```
+Run the plot shell script "plot.sh" and you can see it as below figure.
+```
 __result__
 ![result](https://github.com/geophydog/Time-frequency-analysis/blob/master/Example/ft_BBR.BHZ.SAC.png)
 
