@@ -2,6 +2,10 @@
 
 ***
 
+# NOTICE!!! THIS PROGRAM COMES WITH NO WARRANTY, TO THE EXTEND PERMITED BY LAW!
+
+***
+
 # Time-frequency-analysis
 - Executing time-frequency analysis with Short Time Fourier Transform(STFT) method.
 
