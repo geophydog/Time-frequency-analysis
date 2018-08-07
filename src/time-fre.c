@@ -84,7 +84,7 @@ int main(int argc, char *argv[]) {
     fprintf(fp,"gmtset ANNOT_FONT_PRIMARY 5\ngmtset ANNOT_FONT_SIZE_PRIMARY 15\n");
     fprintf(fp,"awk '{print $1,$2,$3/%g}' %s >tmp.file\n", peak, argv[7]);
     fprintf(fp,"makecpt -Cjet.cpt -T0/1.0/0.1 -Z >tmp1.cpt\n");
-    fprintf(fp,"psxy -R%g/%.1g/%g/%g -JX8i/5i -K -T >%s.ps\n", t1, t2, low_f, high_f, argv[1]);
+    fprintf(fp,"psxy -R%g/%g/%g/%g -JX8i/5i -K -T >%s.ps\n", t1, t2, low_f, high_f, argv[1]);
     fprintf(fp,"surface tmp.file -R -I%g/%g -Gtmp.grd\n", (t2-t1)/3333, (high_f-low_f)/200);
     fprintf(fp,"grd2cpt tmp.grd -Cjet>tmp.cpt\n");
     fprintf(fp,"grdimage tmp.grd -R -J -K -O -Ctmp.cpt -B%d:\"Time(sec)\":/%g:\"Frequency(Hz)\":WSen>>%s.ps\n", \
