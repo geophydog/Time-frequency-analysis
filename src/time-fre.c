@@ -13,7 +13,7 @@ int near_pow2(int n) {
 }
 
 int main(int argc, char *argv[]) {
-    int i, k, npts, seg_npts, seg_num, begin_index, f1_i, f2_i;
+    int i, k = 0, npts, seg_npts, seg_num, begin_index, f1_i, f2_i;
     float seg_len, *data, t1, t2, time = 0., fre, amp, f1, f2, sp, peak = 0.;
     SACHEAD hd;
     fftw_complex *in, *out;
