@@ -92,25 +92,28 @@ int main(int argc, char *argv[]) {
     fftw_free(in); fftw_free(out);
 
 //----------------------------------------------------shell plot script-------------------------------------------------------------
-    fprintf(fp,"R=%g/%g/%g/%g\nPS=%s.ps\nPDF=%s.pdf\n\n", t1, t2, f1, f2, argv[1]);
-    fprintf(fp,"gmtset LABEL_FONT Times-Bold\n");
-    fprintf(fp,"gmtset LABEL_FONT_SIZE 18\n");
-    fprintf(fp,"gmtset ANNOT_FONT_PRIMARY 5\ngmtset ANNOT_FONT_SIZE_PRIMARY 15\n\n");
+    fprintf(fp,"R=%g/%g/%g/%g\nPS=%s.ps\nPDF=%s.pdf\n\n", t1, t2, f1, f2, argv[1], argv[1]);
+	fprintf(fp,"gmt gmtset MAP_TICK_LENGTH_PRIMARY 0.1c\n");
+	fprintf(fp,"gmt gmtset MAP_TICK_LENGTH_SECONDARY 0.05c\n");
+	fprintf(fp,"gmt gmtset MAP_LABEL_OFFSET 12P\n");
+	fprintf(fp,"gmt gmtset MAP_ANNOT_OFFSET_PRIMARY 9p\n");
+    fprintf(fp,"gmt gmtset FONT_LABEL 18p,Times-Bold\n");
+    fprintf(fp,"gmt gmtset FONT_ANNOT_PRIMARY 15p,5\n\n");
     fprintf(fp,"awk '{print $1,$2,$3/%g}' %s >tmp.file\n", peak, argv[7]);
-    fprintf(fp,"makecpt -Cjet.cpt -T0/1.0/0.1 -Z >tmp1.cpt\n");
-    fprintf(fp,"surface tmp.file -R$R -I%g/%g -Gtmp.grd\n", (t2-t1)/3000, (f2-f1)/200);
-    fprintf(fp,"grd2cpt tmp.grd -Cjet>tmp.cpt\n\n");
-    fprintf(fp,"psxy -R$R -JX8i/4i -K -T > $PS\n");
-    fprintf(fp,"grdimage tmp.grd -R -J -K -O -Ctmp.cpt -B%g:\"Time(sec)\":/%g:\"Frequency(Hz)\":WSen -Xa1.5i -Ya1i >> $PS\n", \
+    fprintf(fp,"gmt makecpt -Cjet.cpt -T0/1.0/0.1 -Z >tmp1.cpt\n");
+    fprintf(fp,"gmt surface tmp.file -R$R -I%g/%g -Gtmp.grd\n", (t2-t1)/3000, (f2-f1)/200);
+    fprintf(fp,"gmt grd2cpt tmp.grd -Cjet>tmp.cpt\n\n");
+    fprintf(fp,"gmt psxy -R$R -JX8i/4i -K -T > $PS\n");
+    fprintf(fp,"gmt grdimage tmp.grd -R -J -K -O -Ctmp.cpt -B%g:\"Time(sec)\":/%g:\"Frequency(Hz)\":WSen -Xa0.5i -Ya1i >> $PS\n", \
             (t2-t1)/10, (f2-f1)/10);
-    fprintf(fp,"echo %s 0 1 | pssac2 -R%g/%g/0/2 -JX8i/1i -K -O -B%d/0:\"Amplitude\":WSen -C%g/%g -M0.8 -W0.8p -Xa1.5i -Ya5.5i >> $PS\n", \
-            argv[1], t1, t2,(int)((t2-t1)/10), t1, t2);
-    fprintf(fp,"psscale -Ctmp1.cpt -D9.8i/3i/10.15/0.5 -Ba0.1g0:\"Normalized amplitude power\": -K -O >> $PS\n");
-    fprintf(fp,"echo %g 1 15 0 Times-Bold 0 %s | pstext -R -J -K -O -Xa0i -Ya6.2i>> $PS\n", (t1+t2)/2., argv[1]);
-    fprintf(fp,"psxy -R -J -O -T >> $PS\n\n");
-    fprintf(fp,"ps2raster -Tt -A -P -E300 $PS\n");
+    fprintf(fp,"echo %s %g 1 | gmt pssac -R%g/%g/0/2 -JX8i/1i -K -O -B%d/0:\"Amplitude\":WSen -C%g/%g -M0.8 -W0.8p -Xa0.5i -Ya5.5i >> $PS\n", \
+            argv[1], t1, t1, t2,(int)((t2-t1)/10), t1, t2);
+    fprintf(fp,"gmt psscale -Ctmp1.cpt -D8.5i/3i/10.15/0.5 -Ba0.1g0:\"Normalized amplitude power\": -K -O >> $PS\n");
+    fprintf(fp,"echo %g 1 %s | gmt pstext -R -J -K -F+f15,5 -O -Xa0.5i -Ya6.2i>> $PS\n", (t1+t2)/2., argv[1]);
+    fprintf(fp,"gmt psxy -R -J -O -T >> $PS\n\n");
+    fprintf(fp,"gmt psconvert -Tt -A -P -E300 $PS\n");
     fprintf(fp,"ps2pdf $PS $PDF\n");
-    fprintf(fp,"rm tmp* %s* $PS\n", argv[7]);
+    fprintf(fp,"rm tmp* gmt.* $PS\n", argv[7]);
     fprintf(fp,"evince $PDF\n");
     fclose(fp);
 
