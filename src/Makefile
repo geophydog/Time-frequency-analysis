@@ -1,4 +1,4 @@
-BIN=~/Tools/bin/time-fre
+BIN=time-fre
 
 OBJ = time-fre.o sacio.o
 
